@@ -4,7 +4,7 @@
 
 ## 安装
 
-https://chrome.google.com/webstore/detail/youdao-dict/llopmojlajjdmeilflefogagfolbndme
+https://chrome.google.com/webstore/detail/llopmojlajjdmeilflefogagfolbndme
 
 
 ## 申请有道智云 API
