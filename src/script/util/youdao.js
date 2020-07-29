@@ -1,9 +1,14 @@
 "use strict";
 
+var md5 = require('./md5');
+
 class Youdao {
-  constructor(from, key, resType, query) {
-    [this.from, this.key, this.resType, this.query] = [from, key, resType, query];
-    this.requestUrl = `https://fanyi.youdao.com/openapi.do?keyfrom=${this.from}&key=${this.key}&type=data&doctype=${this.resType}&version=1.1&q=`;
+  constructor(appKey, appSecret, resType, query) {
+    [this.appKey, this.appSecret, this.resType, this.query] = [appKey, appSecret, resType, query];
+    // appkey和appsecret需要去有道智云申请，http://ai.youdao.com/index.s
+    let salt = Date.now() + '';
+    let sign = md5(this.appKey + query + salt + this.appSecret);
+    this.requestUrl = `https://openapi.youdao.com/api?from=auto&to=auto&appKey=${appKey}&salt=${salt}&sign=${sign}&q=${encodeURIComponent(this.query)}`;
   }
 
   isChinese(str) {
@@ -31,11 +36,11 @@ class Youdao {
       explains = res.translation[0];
     } else {
       explains = res.basic.explains;
-      res.basic.phonetic && (pronoun = res.basic.phonetic.split(';')[0]);
-      !this.isChinese(word) && (wav = `https://dict.youdao.com/dictvoice?audio=${word}&type=2`);
-      res.web && (relate = res.web);
+      pronoun = res.basic.phonetic;
     }
-    more = `http://dict.youdao.com/search?q=${res.query}`;
+    wav = res.speakUrl;
+    relate = res.web;
+    res.webdict && (more = res.webdict.url);
 
     return {word, wav, explains, pronoun, relate, more};
   }
@@ -77,12 +82,12 @@ class Youdao {
     _this.removeReferrer();
 
     return new Promise((resolve, reject) => {
-      fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
+      fetch(`${this.requestUrl}`)
         .then(res => {
           if (res.ok) {
             res.json().then(data => {
               let result;
-              if (data.errorCode !== 0) {
+              if (data.errorCode !== '0') {
                 reject('Query failed');
                 return;
               }
@@ -104,7 +109,7 @@ class Youdao {
   }
 
   static addToWordBook(word) {
-    const wordBookLoginUrl = 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull';
+    const wordBookLoginUrl = 'https://account.youdao.com/login?service=dict&back_url=https://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull';
     const addToWordBookApi = 'https://dict.youdao.com/wordbook/ajax?action=addword&q=';
     const wordBookDomain = 'dict.youdao.com';
     // I think the api is made by an intern: adddone => addone

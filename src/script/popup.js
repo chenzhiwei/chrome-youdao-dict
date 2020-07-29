@@ -5,8 +5,8 @@ import '../style/popup.scss';
 import Youdao from './util/youdao';
 
 class Popup {
-  static keyfrom = 'YoungdzeBlog';
-  static key = 498418215;
+  static keyfrom = 'your-youdao-appKey';
+  static key = 'appSecret';
 
   static renderResult(resultJson) {
     resultWrapper.innerHTML = require('../tpl/popup-result.pug')(resultJson);
@@ -16,12 +16,12 @@ class Popup {
   }
 
   static processInput(queryInput) {
-    let [from, resType, query, youdaoKey] = [Popup.keyfrom, 'json', window.getSelection().toString().trim(), Popup.key];
+    let [appKey, appSecret, resType, query] = [Popup.keyfrom, Popup.key, 'json', window.getSelection().toString().trim()];
     query = queryInput.value;
     if (!query) return;
     Popup.renderResult({loading: true});
 
-    let youdao = new Youdao(from, youdaoKey, resType, query);
+    let youdao = new Youdao(appKey, appSecret, resType, query);
     youdao.getContent()
       .then(data => {
         data.loading = false;

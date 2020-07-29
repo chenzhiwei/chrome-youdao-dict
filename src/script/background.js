@@ -1,8 +1,8 @@
 "use strict";
 
 let defaultOptions = {
-  dblclick: true,
-  shortcut: true,
+  dblclick: false,
+  shortcut: false,
   shortcut1: 17,
   shortcut2: null,
   wordbook: false,

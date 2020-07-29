@@ -27,10 +27,10 @@ html(lang='en')
           input#usePersonalKey(type='checkbox', name='usePersonalKey')
           label(for='usePersonalKey')
             | 使用我的 key &nbsp;
-            a(href='http://fanyi.youdao.com/openapi?path=data-mode') 如何申请?
+            a(href='https://ai.youdao.com/index.s') 如何申请?
         .input-field
-          input#keyfrom.validate(type='text', name='keyfrom', placeholder='keyfrom')
-          input#key.validate(type='text', name='key', placeholder='key')
+          input#keyfrom.validate(type='text', name='keyfrom', placeholder='appKey')
+          input#key.validate(type='text', name='key', placeholder='appSecret')
         p
           a#shortcutConfig.btn.waves-effect.waves-light 设置搜索框弹出快捷键
 
