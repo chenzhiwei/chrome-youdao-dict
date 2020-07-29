@@ -20,7 +20,7 @@ class Options {
     this.shortcut1 = document.querySelector('#shortcut1');
     this.shortcut2 = document.querySelector('#shortcut2');
     this.selectToTranslate = document.querySelector('#selectToTranslate');
-    this.wordbook = document.querySelector('#wordbook');
+    this.wordbook = document.querySelector('#wordbook') || document.createElement("fake");
     this.usePersonalKey = document.querySelector('#usePersonalKey');
     this.keyfrom = document.querySelector('input#keyfrom');
     this.key = document.querySelector('input#key');

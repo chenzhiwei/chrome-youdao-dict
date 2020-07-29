@@ -15,3 +15,6 @@ let init = (details) => {
 };
 
 chrome.runtime.onInstalled.addListener(init);
+
+// TODO: allow double click query
+// https://www.chromium.org/Home/chromium-security/extension-content-script-fetches

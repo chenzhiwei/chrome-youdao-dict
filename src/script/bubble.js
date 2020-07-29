@@ -4,8 +4,8 @@ import '../style/bubble.scss';
 import Youdao from './util/youdao';
 
 class Bubble {
-  static keyfrom = 'YoungdzeBlog';
-  static key = 498418215;
+  static keyfrom = 'your-youdao-appKey';
+  static key = 'appSecret';
 
   static renderBubble(tpl) {
     if (document.querySelector('#y-bubble')) {
